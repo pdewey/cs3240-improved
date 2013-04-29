@@ -106,10 +106,8 @@ public class LL1parser
 		}
 
 		// Compute the follow sets
-		int whileCount = 0, inputLine = 0;
 		while (changes)
 		{
-			inputLine = 0;
 			//System.out.println("====================================");
 			//System.out.println("While loop: " + whileCount);
 			changes = false;
@@ -193,12 +191,10 @@ public class LL1parser
 					j++;
 				}
 				//System.out.println(result);
-				inputLine++;
 			}
 
 			//System.out.println("======================================");
 
-			whileCount++;
 		}
 		followSets = result;
 		//System.out.println("\n\n\nFollow Sets = " + followSets);
