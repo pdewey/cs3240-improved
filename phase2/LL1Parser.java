@@ -1,4 +1,4 @@
-package phase2;
+/*package phase2;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -128,7 +128,7 @@ public class LL1Parser
             nonterminals.add(temp[0]);
         }
         System.out.println(nonterminals);
-    }*/
+    }
 
 
 	public String replaceSpace(String str)
@@ -173,7 +173,7 @@ public class LL1Parser
     	}
     	return map;
     }
-	 */
+	 
 
 	public HashSet<Token> getStuff(LinkedHashMap<Token,HashSet<Token>> map, Token key)
 	{
@@ -246,7 +246,7 @@ public class LL1Parser
 						split2[1]+=">";
 						set.add(split2[1]);
 
-					}*/
+					}
 				}
 			}
 		}
@@ -476,4 +476,4 @@ public class LL1Parser
 		Path path = Paths.get(aFileName);
 		return Files.readAllLines(path, ENCODING);
 	}
-}
+}*/
