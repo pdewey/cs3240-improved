@@ -121,14 +121,15 @@ public class LL1parser
 				splitEquals = rule.split("::=");
 				nonTerm = splitEquals[0];
 				currTerm = result.get(nonTerm.trim());
-				splitSpace = splitEquals[1].trim().split("( |>)");
+				splitSpace = splitEquals[1].trim().split("( |>|<)");
 
 				// Add in '>' brackets where needed
 				for (int i = 0; i < splitSpace.length; i++)
 				{
-					if (splitSpace[i].length() > 0 && splitSpace[i].charAt(0) == '<')
+					String checkTerm = "<" + splitSpace[i] + ">";
+					if (checkTerm.length() > 0 && result.containsKey(checkTerm))
 					{
-						splitSpace[i] = splitSpace[i].trim() + ">";
+						splitSpace[i] = "<" + splitSpace[i].trim() + ">";
 					}
 					splitSpace[i] = splitSpace[i].trim();
 				}
