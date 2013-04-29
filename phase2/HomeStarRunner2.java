@@ -11,7 +11,7 @@ public class HomeStarRunner2 {
 	{		
 		LL1parser parse = new LL1parser();
 		
-		parse.inputFile("testGrammar.txt");
+		parse.inputFile("grammar.txt");
 		parse.createFirstSets();
 		parse.createFollowSets();
 		System.out.println("First sets: " + parse.getFirstSets());

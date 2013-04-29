@@ -121,10 +121,10 @@ public class LL1parser
 				splitEquals = rule.split("::=");
 				nonTerm = splitEquals[0];
 				currTerm = result.get(nonTerm.trim());
-				splitSpace = splitEquals[1].trim().split("( |>|<)");
+				splitSpace = splitEquals[1].trim().split(" ");
 
 				// Add in '>' brackets where needed
-				for (int i = 0; i < splitSpace.length; i++)
+				/*for (int i = 0; i < splitSpace.length; i++)
 				{
 					String checkTerm = "<" + splitSpace[i] + ">";
 					if (checkTerm.length() > 0 && result.containsKey(checkTerm))
@@ -132,7 +132,7 @@ public class LL1parser
 						splitSpace[i] = "<" + splitSpace[i].trim() + ">";
 					}
 					splitSpace[i] = splitSpace[i].trim();
-				}
+				}*/
 
 				// For each non-terminal
 				int j = 0;
