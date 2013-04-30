@@ -38,6 +38,8 @@ public class FinalDriver
 		parser.inputFile(grammar);
 		parser.createFirstSets();
 		parser.createFollowSets();
+		System.out.println("First sets: " + parser.getFirstSets());
+		System.out.println("Follow sets: " + parser.getFollowSets());
 		parseTable = parser.getParseTable();
 		inputList = readTextFile(input);
 		begin = parser.getBegin();
