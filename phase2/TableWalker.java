@@ -19,11 +19,10 @@ public class TableWalker
 	public boolean parse()
 	{
 		String[] tokens = input.split(" ");
-		String currToken = "";
+		String currType = "", currValue = "";
 		int currIndex = 0;
 		boolean result = true;
 		stack.push("$");
-		// Push the starting bitch on the stack
 		
 		while (!stack.isEmpty())
 		{

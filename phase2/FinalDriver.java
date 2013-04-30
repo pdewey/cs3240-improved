@@ -21,6 +21,8 @@ public class FinalDriver
     private String grammar, begin, input, output;
     private DriverNFA dr;
     private LL1Parser parser;
+    private TableWalker walker;
+    private boolean accept;
     private final static Charset ENCODING = StandardCharsets.US_ASCII;
 
 	public FinalDriver(String grammar, String input, String spec, String output)
@@ -43,6 +45,8 @@ public class FinalDriver
 		System.out.println("Follow sets: " + parser.getFollowSets());
 		parseTable = parser.getParseTable();
 		inputList = readTextFile(input);
+		walker = new TableWalker(tokens, parseTable);
+		accept = walker.parse();
 		begin = parser.getBegin();
 	}
 
