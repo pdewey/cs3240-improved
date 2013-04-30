@@ -1,0 +1,21 @@
+Code Organization
+=====================
+
+phase1/ holds our working code from Phase I of the project.
+
+phase2/ holds the code for Phase II. 
+LL1Parser.java is where we store methods to calculate first/follow sets and the parsing table
+TableWalker.java is currently not functional, but it is what walks over the input tokens and validates them.
+HomeStarRunner2.java is the entry point of our program. It calls FinalDriver.java.
+FinalDriver.java is what actually controls the program and calls all of the necessary parts.
+
+phase2/tests holds the various testing documents that we used
+    to test things like first/follow sets and the parsing table
+phase2/outputs holds the outputs of the aforementioned testing
+
+Compiling
+======================
+
+It's easiest to compile our project through eclipse due to the number of packages that we have.
+
+Testing our code requires altering the source code in HomeStarRunner2.java where it calls FinalDriver.
