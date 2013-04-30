@@ -11,9 +11,8 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.Map;
-
+import java.util.Set;
 
 public class LL1Parser
 {
@@ -307,7 +306,8 @@ public class LL1Parser
 				}
 				else
 				{
-					HashSet<String> set3=getstuff(map,str);
+					HashSet<String> set3 = getstuff(map,str);
+//					addToParseTable(set3, str, key);
 					for(String t : set3)
 					{
 						set2.add(t);
@@ -330,9 +330,9 @@ public class LL1Parser
 				{
 					String[] split2 = temp.split("<");
 					set.add(split2[0]);
-					HashSet<String> h = new HashSet<String>();
-					h.add(split2[0]);
-					addToParseTable(h, temp, key);
+//					HashSet<String> h = new HashSet<String>();
+//					h.add(split2[0]);
+//					addToParseTable(h, temp, key);
 				}
 				else
 				{
@@ -357,24 +357,45 @@ public class LL1Parser
 		return set;
 	}
 
-
-
 	public Map<String, Set<String>> getFollowSets()
 	{
 		return followSets;
 	}
-
-	public void finishParseTable(){
-		Set<String> firstKeys = firstSets.keySet();
-
-		for(String k : firstKeys){
-			for(String k2 : firstSets.get(k)){
-				if(k2.equals("<epsilon>")){
-					addToParseTable(followSets.get(k), k2, k);
+	
+	public void createParseTable(){		
+		for(int i=0; i<origFile.size(); i++){
+			String[] temp = origFile.get(i).split(" ::= ");
+			String[] temp2 = temp[1].split("\\| ");
+			for(int j=0; j<temp2.length; j++){
+				String[] temp3 = temp2[j].trim().split("\\s+");
+				if(temp3[0].equals("<epsilon>")){
+					addToParseTable(followSets.get(temp[0]), temp3[0], temp[0]);
+				}
+				else{
+					if(temp3[0].charAt(0) == '<'){
+						addToParseTable(firstSets.get(temp3[0]), temp2[j], temp[0]);
+					}
+					else{
+						HashSet<String> h = new HashSet<String>();
+						h.add(temp3[0]);
+						addToParseTable(h, temp2[j], temp[0]);
+					}
 				}
 			}
 		}
 	}
+//
+//	public void finishParseTable(){
+//		Set<String> firstKeys = firstSets.keySet();
+//
+//		for(String k : firstKeys){
+//			for(String k2 : firstSets.get(k)){
+//				if(k2.equals("<epsilon>")){
+//					addToParseTable(followSets.get(k), k2, k);
+//				}
+//			}
+//		}
+//	}
 
 	private Set<String> combineSet(Set<String> tempTerm, Set<String> currTerm)
 	{
@@ -392,7 +413,7 @@ public class LL1Parser
 		}
 		for(String t2 : hs){
 			if(t2.charAt(0)!='<' || t2.length() == 1){
-				parseTable.get(key).put(t2, str);
+				parseTable.get(key).put(t2, str.trim());
 			}
 		}	
 	}
