@@ -62,19 +62,26 @@ public class LL1Parser
 
 	public void createFirstSets()
 	{
-		HashMap<String, Set<String>> map=new HashMap<String,Set<String>>();
-		HashSet<String> keys=new HashSet<String>();
+		HashMap<String, Set<String>> map = new HashMap<String,Set<String>>();
+		HashSet<String> keys = new HashSet<String>();
 		for(String str : origFile)
 		{	
-			str=replaceSpace(str);
+			str = replaceSpace(str);
 			String[] splitString = (str.split("::="));
 			//REMOVE SPACES
 			//splitString[0]= splitString[0].substring(0, splitString[0].length() - 3);
 
 
-			HashSet<String> set=getTerm(splitString[0],splitString[1]);
+			Set<String> set = getTerm(splitString[0],splitString[1]);
 			//terminating conditions are now in
+			if(keys.contains(splitString[0])){
+				set = combineSet(map.get(splitString[0]), set);
+			}
+			else{
+				keys.add(splitString[0]);
+			}
 			map.put(splitString[0], set);
+			
 			keys.add(splitString[0]);
 		}
 
@@ -234,7 +241,6 @@ public class LL1Parser
 		return result;
 	}
 
-
 	public String replaceSpace(String str)
 	{
 		String ret = "";
@@ -248,7 +254,6 @@ public class LL1Parser
 		}
 		return ret;
 	}
-
 
 	public LinkedHashMap<String, Set<String>> createFirstSets(List<String> origFile)
 	{
@@ -277,7 +282,6 @@ public class LL1Parser
 		}
 		return map;
 	}
-
 
 	public HashSet<String> getstuff(HashMap<String,Set<String>> map, String key)
 	{
@@ -316,21 +320,24 @@ public class LL1Parser
 
 	public HashSet<String> getTerm(String key,String str)
 	{
-		HashSet<String> set=new HashSet<String>();
-		String[] split=str.split("\\|");
+		HashSet<String> set = new HashSet<String>();
+		String[] split = str.split("\\|");
 		for(String temp : split)
 		{
 			if(!temp.isEmpty())
 			{
 				if(temp.charAt(0)!='<')
 				{
-					String[] split2=temp.split("<");
+					String[] split2 = temp.split("<");
 					set.add(split2[0]);
+					HashSet<String> h = new HashSet<String>();
+					h.add(split2[0]);
+					addToParseTable(h, temp, key);
 				}
 				else
 				{
-					String[] split2=temp.split(">");
-					split2[0]+=">";
+					String[] split2 = temp.split(">");
+					split2[0] += ">";
 					if(!split2[0].equals(key))
 					{	
 						set.add(split2[0]);
@@ -358,12 +365,12 @@ public class LL1Parser
 	}
 
 	public void finishParseTable(){
-		Set<Token> firstKeys = firstSets.keySet();
+		Set<String> firstKeys = firstSets.keySet();
 
-		for(Token k : firstKeys){
-			for(Token k2 : firstSets.get(k)){
-				if(k2.getValue().equals("<epsilon>")){
-					addToParseTable2(followSets.get(k.getValue()), k2, k.getValue());
+		for(String k : firstKeys){
+			for(String k2 : firstSets.get(k)){
+				if(k2.equals("<epsilon>")){
+					addToParseTable(followSets.get(k), k2, k);
 				}
 			}
 		}
@@ -378,26 +385,14 @@ public class LL1Parser
 		return tempTerm;
 	}
 
-	private void addToParseTable2(HashSet<String> hs, Token str, String key){
+	private void addToParseTable(Set<String> hs, String str, String key){
 		Set<String> ks = parseTable.keySet();
 		if(!ks.contains(key)){
 			parseTable.put(key, new LinkedHashMap<String,String>());
 		}
 		for(String t2 : hs){
 			if(t2.charAt(0)!='<' || t2.length() == 1){
-				parseTable.get(key).put(t2, str.getValue());
-			}
-		}	
-	}
-
-	private void addToParseTable(HashSet<Token> hs, Token str, String key){
-		Set<String> ks = parseTable.keySet();
-		if(!ks.contains(key)){
-			parseTable.put(key, new LinkedHashMap<String,String>());
-		}
-		for(Token t2 : hs){
-			if(t2.getValue().charAt(0)!='<' || t2.getValue().length() == 1){
-				parseTable.get(key).put(t2.getValue(), str.getValue());
+				parseTable.get(key).put(t2, str);
 			}
 		}	
 	}

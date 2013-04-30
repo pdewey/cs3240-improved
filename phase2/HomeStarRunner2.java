@@ -9,9 +9,9 @@ public class HomeStarRunner2 {
 
 	public static void main(String[]args) throws IOException
 	{		
-		LL1parser parse = new LL1parser();
+		LL1Parser parse = new LL1Parser();
 		
-		parse.inputFile("grammar.txt");
+		parse.inputFile("phase2/grammar.txt");
 		parse.createFirstSets();
 		parse.createFollowSets();
 		System.out.println("First sets: " + parse.getFirstSets());
@@ -41,9 +41,9 @@ public class HomeStarRunner2 {
 		{
 			System.out.println(key + " : " + setToString(map.get(key)));
 		}		
-		
-		//FinalDriver fd = new FinalDriver("phase2/grammar.txt", "phase2/script.txt", "phase2/token_spec.txt", "phase2/output");
-		//fd.start();*/
+		*/
+		FinalDriver fd = new FinalDriver("phase2/grammar.txt", "phase2/script.txt", "phase2/token_spec.txt", "phase2/output");
+		fd.start();
 	}
 		
 		
