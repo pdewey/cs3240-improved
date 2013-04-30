@@ -65,11 +65,14 @@ public class LL1Parser
 		HashSet<String> keys = new HashSet<String>();
 		for(String str : origFile)
 		{	
-			str = replaceSpace(str);
+			//str = replaceSpace(str);
 			String[] splitString = (str.split("::="));
+			
+			for(int i=0; i<splitString.length; i++){
+				splitString[i] = splitString[i].trim();
+			}
 			//REMOVE SPACES
 			//splitString[0]= splitString[0].substring(0, splitString[0].length() - 3);
-
 
 			Set<String> set = getTerm(splitString[0],splitString[1]);
 			//terminating conditions are now in
@@ -90,7 +93,6 @@ public class LL1Parser
 		{
 			HashSet<String> value=getstuff(map,key);
 			map.put(key, value);
-
 		}
 		firstSets=map;
 	}
@@ -307,7 +309,6 @@ public class LL1Parser
 				else
 				{
 					HashSet<String> set3 = getstuff(map,str);
-//					addToParseTable(set3, str, key);
 					for(String t : set3)
 					{
 						set2.add(t);
@@ -324,15 +325,13 @@ public class LL1Parser
 		String[] split = str.split("\\|");
 		for(String temp : split)
 		{
+			temp = temp.trim();
 			if(!temp.isEmpty())
 			{
 				if(temp.charAt(0)!='<')
 				{
-					String[] split2 = temp.split("<");
+					String[] split2 = temp.split(" ");
 					set.add(split2[0]);
-//					HashSet<String> h = new HashSet<String>();
-//					h.add(split2[0]);
-//					addToParseTable(h, temp, key);
 				}
 				else
 				{
@@ -384,18 +383,6 @@ public class LL1Parser
 			}
 		}
 	}
-//
-//	public void finishParseTable(){
-//		Set<String> firstKeys = firstSets.keySet();
-//
-//		for(String k : firstKeys){
-//			for(String k2 : firstSets.get(k)){
-//				if(k2.equals("<epsilon>")){
-//					addToParseTable(followSets.get(k), k2, k);
-//				}
-//			}
-//		}
-//	}
 
 	private Set<String> combineSet(Set<String> tempTerm, Set<String> currTerm)
 	{
