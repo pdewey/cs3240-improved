@@ -7,7 +7,7 @@ public class HomeStarRunner2 {
 
 	public static void main(String[]args) throws IOException
 	{
-		FinalDriver fd = new FinalDriver("phase2/grammar.txt", "phase2/script.txt", "phase2/token_spec.txt", "phase2/output");
+		FinalDriver fd = new FinalDriver("phase2/grammar.txt", "phase2/script.txt", "phase2/token_spec.txt", "phase2/phase1_output.txt");
 		fd.start();
 		
 		//		LL1Parser parse = new LL1Parser();

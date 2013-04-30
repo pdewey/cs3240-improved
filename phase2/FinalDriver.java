@@ -1,5 +1,6 @@
 package phase2;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import phase1.DriverNFA;
 
@@ -21,8 +23,8 @@ public class FinalDriver
     private String grammar, begin, input, output;
     private DriverNFA dr;
     private LL1Parser parser;
-    private TableWalker walker;
-    private boolean accept;
+//    private TableWalker walker;
+//    private boolean accept;
     private final static Charset ENCODING = StandardCharsets.US_ASCII;
 
 	public FinalDriver(String grammar, String input, String spec, String output)
@@ -42,11 +44,31 @@ public class FinalDriver
 		parser.createFollowSets();
 		parser.createParseTable();
 		System.out.println("First sets: " + parser.getFirstSets());
+		
+		Set<String> keys = parser.getFirstSets().keySet();
+		
+		FileWriter writer1 = new FileWriter("phase2/firstSets.txt");
+		writer1.write("First sets:\n");
+		for(String k : keys){
+			writer1.write(k + ": " + parser.getFirstSets().get(k).toString() + "\n");
+		}
+		writer1.close();
+		
 		System.out.println("Follow sets: " + parser.getFollowSets());
+		
+		keys = parser.getFollowSets().keySet();
+		
+		FileWriter writer2 = new FileWriter("phase2/followSets.txt");
+		writer2.write("Follow sets:\n");
+		for(String k : keys){
+			writer2.write(k + ": " + parser.getFollowSets().get(k).toString() + "\n");
+		}
+		writer2.close();
+		
 		parseTable = parser.getParseTable();
 		inputList = readTextFile(input);
-		walker = new TableWalker(tokens, parseTable);
-		accept = walker.parse();
+		//walker = new TableWalker(tokens, parseTable);
+		//accept = walker.parse();
 		begin = parser.getBegin();
 	}
 
