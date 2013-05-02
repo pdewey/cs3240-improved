@@ -58,7 +58,7 @@ public class TableWalker
 					pushStack(stack, rule);
 				}
 				catch(NullPointerException e){
-					System.out.println("Additional token expected. No token found.");
+					System.out.println("Specific token expected. Token not found.");
 					result = false;
 					break;
 				}
