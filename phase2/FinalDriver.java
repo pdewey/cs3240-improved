@@ -70,7 +70,14 @@ public class FinalDriver
 		inputList = readTextFile(input);
 		walker = new TableWalker(tokens, parser.getBegin(), parseTable);
 		accept = walker.parse();
-		System.out.println(accept);
+		if (accept)
+		{
+			System.out.println("Accept");
+		}
+		else
+		{
+			System.out.println("Reject");
+		}
 	}
 
 	public void goDriverGo()

@@ -22,18 +22,19 @@ public class TableWalker
 	{
 		String currType = "", currValue = "", currStack = "", rule = "";
 		boolean result = false;
+		tokens.addLast(new Token("$", "$"));
 		stack.push("$");
 		stack.push(begin);
-		currStack = stack.pop();
 
 		while (!stack.isEmpty())	
 		{
 			currType = tokens.getFirst().getId();
 			currValue = tokens.getFirst().getValue();
-			System.out.println(stack);
+			currStack = stack.pop();
+			/*System.out.println(stack);
 			System.out.println(currStack);
 			System.out.println(currType + " " + currValue);
-			System.out.println("=================================");
+			System.out.println("=================================");*/
 
 			
 			
@@ -52,7 +53,7 @@ public class TableWalker
 				{
 					rule = table.get(currStack).get(currValue);
 				}
-				System.out.println("Rule: " + rule);
+				//System.out.println("Rule: " + rule);
 				pushStack(stack, rule);
 				
 			}
@@ -69,10 +70,11 @@ public class TableWalker
 					break;
 				}
 			}
-			currStack = stack.pop();
+			
 		}
 		
-		if (stack.isEmpty() && tokens.isEmpty() || tokens.isEmpty() && stack.size() == 1)
+		//System.out.println("FINAL TOKENS: " + tokens);
+		if (stack.isEmpty() && tokens.isEmpty()) //|| tokens.isEmpty() && stack.size() == 1)
 			result = true;
 		
 		return result;
@@ -86,7 +88,7 @@ public class TableWalker
 			if (!split[i].equals("") && !split[i].equals("<epsilon>"))
 			{
 				stack.push(split[i]);
-				System.out.println("STACK PUSH: " + split[i]);
+				//System.out.println("STACK PUSH: " + split[i]);
 			}
 		}
 	}
@@ -96,7 +98,7 @@ public class TableWalker
 		for(String s : input){
 			String[] temp = s.split(" ", 2);
 			toRet.add(new Token(temp[0], temp[1]));
-			System.out.println("TOKENS: " + temp[0] + " " + temp[1]);
+			//System.out.println("TOKENS: " + temp[0] + " " + temp[1]);
 		}
 		/*for(Token t : toRet){
 			System.out.println(t.toString());
