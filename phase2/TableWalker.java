@@ -5,12 +5,14 @@ import java.util.*;
 public class TableWalker
 {
 	private Stack<String> stack;
+	private String begin;
 	private LinkedHashMap<String, LinkedHashMap<String, String>> table;
 	private LinkedList<Token> tokens;
 	
-	public TableWalker(List<String> inputFile, 
+	public TableWalker(List<String> inputFile, String begin, 
 			LinkedHashMap<String, LinkedHashMap<String, String>> table)
 	{
+		this.begin = begin;
 		this.table = table;
 		this.tokens = createTokens(inputFile);
 		stack = new Stack<String>();
@@ -18,18 +20,75 @@ public class TableWalker
 	
 	public boolean parse()
 	{
-		String currType = "", currValue = "";
-		int currIndex = 0;
-		boolean result = true;
+		String currType = "", currValue = "", currStack = "", rule = "";
+		boolean result = false;
 		stack.push("$");
-		
-		while (!stack.isEmpty())
+		stack.push(begin);
+		currStack = stack.pop();
+
+		while (!stack.isEmpty())	
 		{
+			currType = tokens.getFirst().getId();
+			currValue = tokens.getFirst().getValue();
+			System.out.println(stack);
+			System.out.println(currStack);
+			System.out.println(currType + " " + currValue);
+			System.out.println("=================================");
+
 			
 			
+			if (currStack.equals("<epsilon>"))
+			{
+				currStack = stack.pop();
+			}
+			
+			if (table.containsKey(currStack))
+			{
+				if (table.get(currStack).containsKey(currType))
+				{
+					rule = table.get(currStack).get(currType);
+				}
+				else
+				{
+					rule = table.get(currStack).get(currValue);
+				}
+				System.out.println("Rule: " + rule);
+				pushStack(stack, rule);
+				
+			}
+			else 
+			{
+				if (currStack.equals(currValue) || currStack.equals(currType))
+				{
+					tokens.removeFirst();
+				}
+				else
+				{
+					System.out.println("Form not valid");
+					result =  false;
+					break;
+				}
+			}
+			currStack = stack.pop();
 		}
 		
+		if (stack.isEmpty() && tokens.isEmpty() || tokens.isEmpty() && stack.size() == 1)
+			result = true;
+		
 		return result;
+	}
+	
+	private void pushStack(Stack<String> stack, String rule)
+	{
+		String[] split = rule.split(" ");
+		for (int i = split.length-1; i >= 0; --i)
+		{
+			if (!split[i].equals("") && !split[i].equals("<epsilon>"))
+			{
+				stack.push(split[i]);
+				System.out.println("STACK PUSH: " + split[i]);
+			}
+		}
 	}
 	
 	private LinkedList<Token> createTokens(List<String> input){
@@ -37,21 +96,11 @@ public class TableWalker
 		for(String s : input){
 			String[] temp = s.split(" ", 2);
 			toRet.add(new Token(temp[0], temp[1]));
+			System.out.println("TOKENS: " + temp[0] + " " + temp[1]);
 		}
-		for(Token t : toRet){
+		/*for(Token t : toRet){
 			System.out.println(t.toString());
-		}
+		}*/
 		return toRet;
-	}
-	
-	private String appendStrings(List<String> input)
-	{
-		String result = "";
-		for (String s : input)
-		{
-			result += s + " ";
-		}
-		
-		return result.trim();
 	}
 }

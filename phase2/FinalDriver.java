@@ -43,7 +43,7 @@ public class FinalDriver
 		parser.createFirstSets();
 		parser.createFollowSets();
 		parser.createParseTable();
-		System.out.println("First sets: " + parser.getFirstSets());
+		//System.out.println("First sets: " + parser.getFirstSets());
 		
 		Set<String> keys = parser.getFirstSets().keySet();
 		
@@ -54,7 +54,7 @@ public class FinalDriver
 		}
 		writer1.close();
 		
-		System.out.println("Follow sets: " + parser.getFollowSets());
+		//System.out.println("Follow sets: " + parser.getFollowSets());
 		
 		keys = parser.getFollowSets().keySet();
 		
@@ -66,10 +66,10 @@ public class FinalDriver
 		writer2.close();
 		
 		parseTable = parser.getParseTable();
+		//System.out.println(parseTable);
 		inputList = readTextFile(input);
-		walker = new TableWalker(tokens, parseTable);
+		walker = new TableWalker(tokens, parser.getBegin(), parseTable);
 		accept = walker.parse();
-		begin = parser.getBegin();
 		System.out.println(accept);
 	}
 

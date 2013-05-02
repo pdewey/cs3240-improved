@@ -123,6 +123,7 @@ public class LL1Parser
 
 			if (isFirst)
 			{
+				begin = nonTerm;
 				result.get(nonTerm).add("$");
 				isFirst = false;
 			}
@@ -368,16 +369,16 @@ public class LL1Parser
 			for(int j=0; j<temp2.length; j++){
 				String[] temp3 = temp2[j].trim().split("\\s+");
 				if(temp3[0].equals("<epsilon>")){
-					addToParseTable(followSets.get(temp[0]), temp3[0], temp[0]);
+					addToParseTable(followSets.get(temp[0]), temp3[0].trim(), temp[0].trim());
 				}
 				else{
 					if(temp3[0].charAt(0) == '<'){
-						addToParseTable(firstSets.get(temp3[0]), temp2[j], temp[0]);
+						addToParseTable(firstSets.get(temp3[0]), temp2[j].trim(), temp[0].trim());
 					}
-					else{
+					else {
 						HashSet<String> h = new HashSet<String>();
 						h.add(temp3[0]);
-						addToParseTable(h, temp2[j], temp[0]);
+						addToParseTable(h, temp2[j].trim(), temp[0].trim());
 					}
 				}
 			}
