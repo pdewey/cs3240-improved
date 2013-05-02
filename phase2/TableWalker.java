@@ -6,7 +6,7 @@ public class TableWalker
 {
 	private Stack<String> stack;
 	private LinkedHashMap<String, LinkedHashMap<String, String>> table;
-	private LinkedHashSet<Token> tokens;
+	private LinkedList<Token> tokens;
 	
 	public TableWalker(List<String> inputFile, 
 			LinkedHashMap<String, LinkedHashMap<String, String>> table)
@@ -32,12 +32,14 @@ public class TableWalker
 		return result;
 	}
 	
-	private LinkedHashSet<Token> createTokens(List<String> input){
-		LinkedHashSet<Token> toRet = new LinkedHashSet<Token>();
+	private LinkedList<Token> createTokens(List<String> input){
+		LinkedList<Token> toRet = new LinkedList<Token>();
 		for(String s : input){
 			String[] temp = s.split(" ", 2);
-			System.out.println(Arrays.toString(temp));
 			toRet.add(new Token(temp[0], temp[1]));
+		}
+		for(Token t : toRet){
+			System.out.println(t.toString());
 		}
 		return toRet;
 	}
