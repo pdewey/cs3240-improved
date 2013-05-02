@@ -57,7 +57,7 @@ public class HomeStarRunner2 {
 		}	
 		return ret;
 	}	
-	/*
+	
 	public static String setToString2(Set<Token> set)
 	{
 		String ret="";
@@ -69,5 +69,5 @@ public class HomeStarRunner2 {
 			ret+=" ";
 		}	
 		return ret;
-	}	*/
+	}	
 }
