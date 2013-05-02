@@ -54,7 +54,14 @@ public class TableWalker
 					rule = table.get(currStack).get(currValue);
 				}
 				//System.out.println("Rule: " + rule);
-				pushStack(stack, rule);
+				try{
+					pushStack(stack, rule);
+				}
+				catch(NullPointerException e){
+					System.out.println("Additional token expected. No token found.");
+					result = false;
+					break;
+				}
 				
 			}
 			else 
