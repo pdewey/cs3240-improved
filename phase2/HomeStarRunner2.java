@@ -56,18 +56,5 @@ public class HomeStarRunner2 {
 			ret+=" ";
 		}	
 		return ret;
-	}	
-
-	public static String setToString2(Set<Token> set)
-	{
-		String ret="";
-
-		for(Token s : set)
-		{
-			String s2=s.getValue();
-			ret+=s2;
-			ret+=" ";
-		}	
-		return ret;
-	}	
+	}		
 }
