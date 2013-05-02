@@ -21,7 +21,6 @@ public class TableWalkerNFA
 
     public List<Token> parse()
     {
-    	System.out.println("Entered Parse");
         String curr;
         String identifier, tempIdentifier;
         int index = 0, oldIndex = 0, tempIndex = 0;
@@ -37,7 +36,6 @@ public class TableWalkerNFA
     	ALL:
     	while(index < input.size()){
     		if(tempCurrToken.length() > 0){
-    			System.out.println("Accepts: " + tempIdentifier);
 	            Token acc = new Token(tempIdentifier, tempCurrToken);
 	            output.add(acc);
 	            currToken = "";
@@ -144,7 +142,6 @@ public class TableWalkerNFA
                 	tempIdentifier = identifier;
                 	tempIndex = index;
                 }  
-				System.out.println("Accepts: " + tempIdentifier);
                 Token acc = new Token(tempIdentifier, tempCurrToken);
                 output.add(acc);
                 break;
